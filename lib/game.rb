@@ -10,10 +10,10 @@ class Game
 
   def initialize
     @board_repository = BoardRepository.new
-    @start_game = StartGame.new(board_repository: @board_repository)
-    @place_new_piece = PlayMove.new(board_repository: @board_repository)
-    @view_available_moves = ViewAvailableMoves.new(board_repository: @board_repository)
-    @check_move_is_valid = CheckMoveIsValid.new(board_repository: @board_repository)
+    @start_game = StartGame.new(@board_repository)
+    @place_new_piece = PlayMove.new(@board_repository)
+    @view_available_moves = ViewAvailableMoves.new(@board_repository)
+    @check_move_is_valid = CheckMoveIsValid.new(@board_repository)
   end
 
   def start(presenter)

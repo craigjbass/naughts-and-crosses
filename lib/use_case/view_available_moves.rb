@@ -1,5 +1,5 @@
 class ViewAvailableMoves
-  def initialize(board_repository:)
+  def initialize(board_repository)
     @board_repository = board_repository
   end
 
