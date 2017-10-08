@@ -1,6 +1,12 @@
-class BoardCreator
+class PlaceNewPiece
   def initialize(board_repository:)
     @board_repository = board_repository
+  end
+
+  def execute(x:, y:, type:)
+    @board_repository.update(
+      with_piece_at(x, y, type)
+    )
   end
 
   def with_piece_at(x, y, piece)
@@ -21,5 +27,4 @@ class BoardCreator
     zero_indexed_x = x - 1
     (zero_indexed_y * board.size) + zero_indexed_x
   end
-
 end

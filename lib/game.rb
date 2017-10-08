@@ -1,8 +1,8 @@
 require 'immutable_board'
-require 'board_creator'
 require 'board_coordinates'
 require 'board_repository'
 require 'use_case/start_game'
+require 'use_case/place_new_piece'
 
 class Game
   BOARD_SIZE = 3
@@ -10,11 +10,11 @@ class Game
   def initialize
     @board_repository = BoardRepository.new
     @start_game = StartGame.new(board_repository: @board_repository)
+    @place_new_piece = PlaceNewPiece.new(board_repository: @board_repository)
   end
 
   def start(presenter)
     @presenter = presenter
-    @board_creator = BoardCreator.new(board_repository: @board_repository)
     @start_game.execute(size: BOARD_SIZE)
     @board_coordinates = BoardCoordinates.new(size: BOARD_SIZE)
 
@@ -26,10 +26,7 @@ class Game
   end
 
   def place(x, y)
-    @board_repository.update(
-      @board_creator.with_piece_at(x, y, 'X')
-    )
-
+    @place_new_piece.execute(x: x, y: y, type: 'X')
     present
   end
 
