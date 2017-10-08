@@ -33,7 +33,6 @@ class Board
     [linear_position % size + 1, linear_position / size + 1]
   end
 
-
   def occupied_linear_positions
     @state
       .each_index
