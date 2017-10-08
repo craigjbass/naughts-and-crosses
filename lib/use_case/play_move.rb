@@ -1,4 +1,4 @@
-class PlaceNewPiece
+class PlayMove
   def initialize(board_repository:)
     @board_repository = board_repository
   end
