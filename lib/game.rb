@@ -1,9 +1,11 @@
+require 'board'
+
 class Game
   GRID_SIZE = 3
 
   def start(presenter)
     @presenter = presenter
-    @board = empty_board
+    @board = Board.new(empty_board)
 
     present
   end
@@ -24,7 +26,7 @@ class Game
   private
 
   def present
-    @presenter.present(@board)
+    @presenter.present(@board.to_a)
     nil
   end
 
@@ -37,7 +39,7 @@ class Game
   end
 
   def occupied_xy_coordinates
-    occupied_linear_positions.map do |linear_position|
+    @board.occupied_linear_positions.map do |linear_position|
       xy_coordinate_for(linear_position)
     end
   end
@@ -47,12 +49,6 @@ class Game
       .to_a
       .repeated_permutation(2)
       .to_a
-  end
-
-  def occupied_linear_positions
-    @board
-      .each_index
-      .select { |i| @board[i] == 'X' }
   end
 
   def xy_coordinate_for(linear_position)
