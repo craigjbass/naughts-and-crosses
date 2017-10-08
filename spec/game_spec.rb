@@ -59,6 +59,10 @@ describe Game do
         ]
         expect(presenter.board).to eq(expected_board)
       end
+
+      it '#place has nil return value' do
+        expect(game.place(1,1)).to be_nil
+      end
     end
 
     context 'when the player has placed a piece' do
