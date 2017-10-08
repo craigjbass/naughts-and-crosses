@@ -1,4 +1,4 @@
-class SubscribableBoardRepository
+class SubscribableBoardRepositoryProxy
   def initialize(board_repository)
     @board_repository = board_repository
   end
@@ -9,7 +9,7 @@ class SubscribableBoardRepository
 
   def update(new_board)
     @board_repository.update(new_board)
-    @subscriber.()
+    @subscriber.() unless @subscriber.nil?
   end
 
   def subscribe(&block)

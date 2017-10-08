@@ -1,4 +1,4 @@
-class BoardRepository
+class InMemoryBoardRepository
   def fetch
     @current_board
   end

@@ -1,6 +1,6 @@
 require 'domain/board'
-require 'repository/board_repository'
-require 'repository/subscribable_board_repository'
+require 'repository/in_memory_board_repository'
+require 'repository/subscribable_board_repository_proxy'
 require 'use_case/start_game'
 require 'use_case/play_move'
 require 'use_case/view_available_moves'
@@ -10,7 +10,7 @@ class Game
   BOARD_SIZE = 3
 
   def initialize
-    @board_repository = SubscribableBoardRepository.new(BoardRepository.new)
+    @board_repository = SubscribableBoardRepositoryProxy.new(InMemoryBoardRepository.new)
 
     @start_game = StartGame.new(@board_repository)
     @place_new_piece = PlayMove.new(@board_repository)
