@@ -1,34 +1,16 @@
 class Board
   def initialize(size:)
-    @array = empty_board
+    @state = empty_board
     @size = size
+  end
+
+  def to_a
+    @state
   end
 
   def place(piece, x, y)
     position = linear_position_for(x, y)
-    self[position] = piece
-  end
-
-  def empty_board
-    [
-      '', '', '',
-      '', '', '',
-      '', '', ''
-    ]
-  end
-
-  def []=(key, value)
-    @array[key] = value
-  end
-
-  def [](key)
-    @array[key]
-  end
-
-  def occupied_linear_positions
-    @array
-      .each_index
-      .select { |i| @array[i] == 'X' }
+    @state[position] = piece
   end
 
   def occupied_coordinates
@@ -44,6 +26,22 @@ class Board
       .to_a
   end
 
+  private
+
+  def empty_board
+    [
+      '', '', '',
+      '', '', '',
+      '', '', ''
+    ]
+  end
+
+  def occupied_linear_positions
+    @state
+      .each_index
+      .select { |i| @state[i] == 'X' }
+  end
+
   def xy_coordinate_for(linear_position)
     [linear_position % @size + 1, linear_position / @size + 1]
   end
@@ -52,9 +50,5 @@ class Board
     zero_indexed_y = y - 1
     zero_indexed_x = x - 1
     (zero_indexed_y * @size) + zero_indexed_x
-  end
-
-  def to_a
-    @array
   end
 end
