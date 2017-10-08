@@ -8,6 +8,10 @@ class Game
     present
   end
 
+  def valid?(x, y)
+    available_coordinates.include?([x, y])
+  end
+
   def place(x, y)
     @board.place('X', x, y)
 
@@ -15,10 +19,7 @@ class Game
   end
 
   def available_coordinates
-    occupied_coordinates = @board.occupied_coordinates
-    @board.coordinates.reject do |coordinate|
-      occupied_coordinates.include?(coordinate)
-    end
+    @board.coordinates - @board.occupied_coordinates
   end
 
   private

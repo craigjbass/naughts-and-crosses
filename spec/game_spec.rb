@@ -46,6 +46,49 @@ describe Game do
       end
     end
 
+    context 'when checking whether it is possible to move' do
+      subject { game.valid?(x, y) }
+      context 'to position 1,1' do
+        let(:x) { 1 }
+        let(:y) { 1 }
+        it 'is a valid move' do
+          is_expected.to eq(true)
+        end
+      end
+
+      context 'to position 0,0' do
+        let(:x) { 0 }
+        let(:y) { 0 }
+        it 'is an invalid move' do
+          is_expected.to eq(false)
+        end
+      end
+
+      context 'to position 1,0' do
+        let(:x) { 1 }
+        let(:y) { 0 }
+        it 'is an invalid move' do
+          is_expected.to eq(false)
+        end
+      end
+
+      context 'to position 4,1' do
+        let(:x) { 4 }
+        let(:y) { 1 }
+        it 'is an invalid move' do
+          is_expected.to eq(false)
+        end
+      end
+
+      context 'to position 1,4' do
+        let(:x) { 1 }
+        let(:y) { 4 }
+        it 'is an invalid move' do
+          is_expected.to eq(false)
+        end
+      end
+    end
+
     context 'when the player has placed a piece' do
       before { game.place(x, y) }
 
@@ -63,6 +106,10 @@ describe Game do
 
         it 'has not got 1,1 available' do
           expect(game.available_coordinates).not_to include([1, 1])
+        end
+
+        it 'is invalid to place another piece on 1,1' do
+          expect(game.valid?(1, 1)).to eq(false)
         end
 
         it 'has all other coordinates available' do
@@ -98,7 +145,6 @@ describe Game do
         end
       end
 
-
       context 'in position 3,2' do
         let(:x) { 3 }
         let(:y) { 2 }
@@ -126,6 +172,10 @@ describe Game do
             '', '', ''
           ]
           expect(presenter.board).to eq(expected_board)
+        end
+
+        it 'is invalid to place another piece on 2,2' do
+          expect(game.valid?(2, 2)).to eq(false)
         end
 
         it 'has not got 2,2 available' do
