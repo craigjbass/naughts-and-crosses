@@ -1,15 +1,10 @@
 class CheckMoveIsValid
-  def initialize(view_available_moves:)
-    @view_available_moves = view_available_moves
+  def initialize(board_repository:)
+    @board_repository = board_repository
   end
 
   def execute(x:, y:)
-    available_coordinates.include?([x, y])
-  end
-
-  private
-
-  def available_coordinates
-    @view_available_moves.execute
+    @board = @board_repository.fetch
+    @board.all_remaining_moves.include?([x, y])
   end
 end
