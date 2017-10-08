@@ -17,25 +17,14 @@ class Game
       '', '', ''
     ]
 
-    index = if y == 1
-              0
-            elsif y == 2
-              3
-            elsif y == 3
-              6
-            end
+    position = coordinates_to_position(x, y)
+    board[position] = 'X'
 
-    if x == 3
-      index += 2
-    elsif x == 2
-      index += 1
-    end
+    @presenter.present(board)
+  end
 
-    board[index] = 'X'
-
-    @presenter.present(
-      board
-    )
+  def coordinates_to_position(x, y)
+    ((y-1) * 3) + (x-1)
   end
 end
 
