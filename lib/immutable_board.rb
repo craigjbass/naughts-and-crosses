@@ -1,6 +1,6 @@
-class Board
-  def initialize(size:)
-    @state = empty_board
+class ImmutableBoard
+  def initialize(size:, initial_state: empty_board)
+    @state = initial_state.freeze
     @size = size
   end
 
@@ -10,7 +10,13 @@ class Board
 
   def place(piece, x, y)
     position = linear_position_for(x, y)
-    @state[position] = piece
+
+    new_state = @state.dup
+    new_state[position] = piece
+    ImmutableBoard.new(
+      size: @size,
+      initial_state: new_state
+    )
   end
 
   def occupied_coordinates

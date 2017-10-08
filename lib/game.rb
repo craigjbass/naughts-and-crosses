@@ -1,9 +1,9 @@
-require 'board'
+require 'immutable_board'
 
 class Game
   def start(presenter)
     @presenter = presenter
-    @board = Board.new(size: 3)
+    @board = ImmutableBoard.new(size: 3)
 
     present
   end
@@ -13,7 +13,7 @@ class Game
   end
 
   def place(x, y)
-    @board.place('X', x, y)
+    @board = @board.place('X', x, y)
 
     present
   end
