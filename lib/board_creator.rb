@@ -22,7 +22,4 @@ class BoardCreator
     (zero_indexed_y * board.size) + zero_indexed_x
   end
 
-  def empty_board(size:)
-    ImmutableBoard.new(size: size)
-  end
 end

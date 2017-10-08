@@ -3,7 +3,7 @@ class ImmutableBoard
 
   def initialize(size:, initial_state: nil)
     @size = size
-    @state = (initial_state || empty_board).freeze
+    @state = (initial_state || empty_board_with).freeze
   end
 
   def occupied_linear_positions
@@ -18,7 +18,4 @@ class ImmutableBoard
 
   private
 
-  def empty_board
-    (0...@size * @size).map { |_| nil }
-  end
 end

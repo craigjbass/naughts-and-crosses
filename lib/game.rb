@@ -2,18 +2,20 @@ require 'immutable_board'
 require 'board_creator'
 require 'board_coordinates'
 require 'board_repository'
+require 'use_case/start_game'
 
 class Game
   BOARD_SIZE = 3
 
   def initialize
     @board_repository = BoardRepository.new
+    @start_game = StartGame.new(board_repository: @board_repository)
   end
 
   def start(presenter)
     @presenter = presenter
     @board_creator = BoardCreator.new(board_repository: @board_repository)
-    @board_repository.update(@board_creator.empty_board(size: BOARD_SIZE))
+    @start_game.execute(size: BOARD_SIZE)
     @board_coordinates = BoardCoordinates.new(size: BOARD_SIZE)
 
     present
