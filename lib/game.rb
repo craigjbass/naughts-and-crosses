@@ -12,7 +12,7 @@ class Game
 
   def start(presenter)
     @presenter = presenter
-    @board_creator = BoardCreator.new(size: BOARD_SIZE)
+    @board_creator = BoardCreator.new(board_repository: @board_repository)
     @board_repository.update(@board_creator.empty_board(size: BOARD_SIZE))
     @board_coordinates = BoardCoordinates.new(size: BOARD_SIZE)
 
@@ -25,7 +25,7 @@ class Game
 
   def place(x, y)
     @board_repository.update(
-      @board_creator.with_piece_at(@board_repository.fetch, x, y, 'X')
+      @board_creator.with_piece_at(x, y, 'X')
     )
 
     present
