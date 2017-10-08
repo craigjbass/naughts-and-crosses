@@ -12,9 +12,9 @@ class Game
 
   def start(presenter)
     @presenter = presenter
-    @board_repository.update(ImmutableBoard.new(size: BOARD_SIZE))
-    @board_coordinates = BoardCoordinates.new(size: BOARD_SIZE)
     @board_creator = BoardCreator.new(size: BOARD_SIZE)
+    @board_repository.update(@board_creator.empty_board(size: BOARD_SIZE))
+    @board_coordinates = BoardCoordinates.new(size: BOARD_SIZE)
 
     present
   end
