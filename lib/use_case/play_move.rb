@@ -7,6 +7,7 @@ class PlayMove
     @board_repository.update(
       with_piece_at(x, y, type)
     )
+    nil
   end
 
   private

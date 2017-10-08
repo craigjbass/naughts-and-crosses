@@ -1,5 +1,6 @@
 require 'domain/board'
-require 'board_repository'
+require 'repository/board_repository'
+require 'repository/subscribable_board_repository'
 require 'use_case/start_game'
 require 'use_case/play_move'
 require 'use_case/view_available_moves'
@@ -9,7 +10,8 @@ class Game
   BOARD_SIZE = 3
 
   def initialize
-    @board_repository = BoardRepository.new
+    @board_repository = SubscribableBoardRepository.new(BoardRepository.new)
+
     @start_game = StartGame.new(@board_repository)
     @place_new_piece = PlayMove.new(@board_repository)
     @view_available_moves = ViewAvailableMoves.new(@board_repository)
@@ -18,9 +20,8 @@ class Game
 
   def start(presenter)
     @presenter = presenter
+    @board_repository.subscribe { present }
     @start_game.execute(size: BOARD_SIZE)
-
-    present
   end
 
   def valid?(x, y)
@@ -29,7 +30,6 @@ class Game
 
   def place(x, y)
     @place_new_piece.execute(x: x, y: y, type: 'X')
-    present
   end
 
   def available_coordinates
@@ -43,6 +43,5 @@ class Game
     @presenter.present(
       board.map { |cell| cell.nil? ? '' : cell }
     )
-    nil
   end
 end
