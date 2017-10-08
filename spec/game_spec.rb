@@ -1,4 +1,6 @@
 class Game
+  GRID_SIZE = 3
+
   def start(presenter)
     @presenter = presenter
     @board = empty_board
@@ -6,9 +8,8 @@ class Game
     present
   end
 
-
   def place(x, y)
-    position = coordinates_to_position(x, y)
+    position = linear_position_for(x, y)
     @board[position] = 'X'
 
     present
@@ -29,8 +30,10 @@ class Game
     ]
   end
 
-  def coordinates_to_position(x, y)
-    ((y-1) * 3) + (x-1)
+  def linear_position_for(x, y)
+    zero_indexed_y = y - 1
+    zero_indexed_x = x - 1
+    (zero_indexed_y * GRID_SIZE) + zero_indexed_x
   end
 end
 
