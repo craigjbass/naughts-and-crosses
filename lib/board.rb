@@ -1,6 +1,14 @@
 class Board
-  def initialize(array)
-    @array = array
+  def initialize
+    @array = empty_board
+  end
+
+  def empty_board
+    [
+      '', '', '',
+      '', '', '',
+      '', '', ''
+    ]
   end
 
   def []=(key, value)

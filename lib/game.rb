@@ -5,7 +5,7 @@ class Game
 
   def start(presenter)
     @presenter = presenter
-    @board = Board.new(empty_board)
+    @board = Board.new
 
     present
   end
@@ -28,14 +28,6 @@ class Game
   def present
     @presenter.present(@board.to_a)
     nil
-  end
-
-  def empty_board
-    [
-      '', '', '',
-      '', '', '',
-      '', '', ''
-    ]
   end
 
   def occupied_xy_coordinates
