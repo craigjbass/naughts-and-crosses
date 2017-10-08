@@ -28,6 +28,22 @@ describe Game do
       it '#place has nil return value' do
         expect(game.place(1, 1)).to be_nil
       end
+
+      it 'has all positions as available' do
+        [
+          [1, 1],
+          [2, 1],
+          [3, 1],
+          [1, 2],
+          [2, 2],
+          [3, 2],
+          [1, 3],
+          [2, 3],
+          [3, 3]
+        ].each do |coordinate|
+          expect(game.available_coordinates).to include(coordinate)
+        end
+      end
     end
 
     context 'when the player has placed a piece' do
@@ -44,6 +60,25 @@ describe Game do
           ]
           expect(presenter.board).to eq(expected_board)
         end
+
+        it 'has not got 1,1 available' do
+          expect(game.available_coordinates).not_to include([1, 1])
+        end
+
+        it 'has all other coordinates available' do
+          [
+            [2, 1],
+            [3, 1],
+            [1, 2],
+            [2, 2],
+            [3, 2],
+            [1, 3],
+            [2, 3],
+            [3, 3]
+          ].each do |coordinate|
+            expect(game.available_coordinates).to include(coordinate)
+          end
+        end
       end
 
       context 'in position 1,2' do
@@ -56,6 +91,10 @@ describe Game do
             '', '', ''
           ]
           expect(presenter.board).to eq(expected_board)
+        end
+
+        it 'has not got 1,2 available' do
+          expect(game.available_coordinates).not_to include([1, 2])
         end
       end
 
@@ -71,6 +110,10 @@ describe Game do
           ]
           expect(presenter.board).to eq(expected_board)
         end
+
+        it 'has not got 3,2 available' do
+          expect(game.available_coordinates).not_to include([3, 2])
+        end
       end
 
       context 'in position 2,2' do
@@ -84,6 +127,10 @@ describe Game do
           ]
           expect(presenter.board).to eq(expected_board)
         end
+
+        it 'has not got 2,2 available' do
+          expect(game.available_coordinates).not_to include([2, 2])
+        end
       end
 
       context 'in position 1,3' do
@@ -96,6 +143,10 @@ describe Game do
             'X', '', ''
           ]
           expect(presenter.board).to eq(expected_board)
+        end
+
+        it 'has not got 1,3 available' do
+          expect(game.available_coordinates).not_to include([1, 3])
         end
       end
     end

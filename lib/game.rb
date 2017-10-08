@@ -15,6 +15,21 @@ class Game
     present
   end
 
+  def available_coordinates
+    one_dimension_of_coordinates = (1...GRID_SIZE + 1).to_a
+    all_grid_coordinates = one_dimension_of_coordinates
+                             .repeated_permutation(2)
+                             .to_a
+
+    return all_grid_coordinates.reject { |c| c == [1,1] } if @board[0] == 'X'
+    return all_grid_coordinates.reject { |c| c == [1,2] } if @board[3] == 'X'
+    return all_grid_coordinates.reject { |c| c == [3,2] } if @board[5] == 'X'
+    return all_grid_coordinates.reject { |c| c == [2,2] } if @board[4] == 'X'
+    return all_grid_coordinates.reject { |c| c == [1,3] } if @board[6] == 'X'
+
+    all_grid_coordinates
+  end
+
   private
 
   def present
