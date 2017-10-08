@@ -9,6 +9,8 @@ class StartGame
     )
   end
 
+  private
+
   def empty_board_with(size)
     ImmutableBoard.new(
       size: size,

@@ -9,6 +9,8 @@ class PlayMove
     )
   end
 
+  private
+
   def with_piece_at(x, y, piece)
     board = @board_repository.fetch
     position = linear_position_for(x, y)
