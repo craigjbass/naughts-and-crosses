@@ -1,4 +1,4 @@
-require 'immutable_board'
+require 'domain/board'
 require 'board_repository'
 require 'use_case/start_game'
 require 'use_case/play_move'

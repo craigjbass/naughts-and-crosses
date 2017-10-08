@@ -17,7 +17,7 @@ class PlayMove
 
     new_state = board.to_a.dup
     new_state[position] = piece
-    ImmutableBoard.new(
+    Board.new(
       size: board.size,
       initial_state: new_state
     )

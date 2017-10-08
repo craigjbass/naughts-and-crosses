@@ -1,9 +1,9 @@
-class ImmutableBoard
+class Board
   attr_reader :size
 
   def initialize(size:, initial_state: nil)
     @size = size
-    @state = (initial_state || empty_board_with).freeze
+    @state = initial_state.freeze
   end
 
   def occupied_linear_positions
@@ -15,7 +15,4 @@ class ImmutableBoard
   def to_a
     @state
   end
-
-  private
-
 end

@@ -12,7 +12,7 @@ class StartGame
   private
 
   def empty_board_with(size)
-    ImmutableBoard.new(
+    Board.new(
       size: size,
       initial_state: (0...size * size).map { |_| nil }
     )
