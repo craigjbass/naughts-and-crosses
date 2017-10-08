@@ -16,18 +16,9 @@ class Game
   end
 
   def available_coordinates
-    one_dimension_of_coordinates = (1...GRID_SIZE + 1).to_a
-    all_grid_coordinates = one_dimension_of_coordinates
-                             .repeated_permutation(2)
-                             .to_a
+    occupied_coordinates = occupied_xy_coordinates
 
-    return all_grid_coordinates.reject { |c| c == [1,1] } if @board[0] == 'X'
-    return all_grid_coordinates.reject { |c| c == [1,2] } if @board[3] == 'X'
-    return all_grid_coordinates.reject { |c| c == [3,2] } if @board[5] == 'X'
-    return all_grid_coordinates.reject { |c| c == [2,2] } if @board[4] == 'X'
-    return all_grid_coordinates.reject { |c| c == [1,3] } if @board[6] == 'X'
-
-    all_grid_coordinates
+    grid_coordinates.reject { |c| occupied_coordinates.include?(c) }
   end
 
   private
@@ -43,6 +34,29 @@ class Game
       '', '', '',
       '', '', ''
     ]
+  end
+
+  def occupied_xy_coordinates
+    occupied_linear_positions.map do |linear_position|
+      xy_coordinate_for(linear_position)
+    end
+  end
+
+  def grid_coordinates
+    (1...GRID_SIZE + 1)
+      .to_a
+      .repeated_permutation(2)
+      .to_a
+  end
+
+  def occupied_linear_positions
+    @board
+      .each_index
+      .select { |i| @board[i] == 'X' }
+  end
+
+  def xy_coordinate_for(linear_position)
+    [linear_position%GRID_SIZE+1, linear_position/GRID_SIZE+1]
   end
 
   def linear_position_for(x, y)
