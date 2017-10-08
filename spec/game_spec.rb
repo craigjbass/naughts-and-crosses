@@ -2,7 +2,7 @@ class Game
   def start(presenter)
     @presenter = presenter
     @board = empty_board
-    @presenter.present(empty_board)
+    @presenter.present(@board)
   end
 
   def place(x, y)
