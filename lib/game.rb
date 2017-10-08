@@ -25,7 +25,10 @@ class Game
   private
 
   def present
-    @presenter.present(@board.to_a)
+    board = @board.to_a
+    @presenter.present(
+      board.map { |cell| cell.nil? ? '' : cell }
+    )
     nil
   end
 end

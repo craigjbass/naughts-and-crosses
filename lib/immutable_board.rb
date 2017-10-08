@@ -1,11 +1,7 @@
 class ImmutableBoard
-  def initialize(size:, initial_state: empty_board)
-    @state = initial_state.freeze
+  def initialize(size:, initial_state: nil)
     @size = size
-  end
-
-  def to_a
-    @state
+    @state = (initial_state || empty_board).freeze
   end
 
   def place(piece, x, y)
@@ -17,6 +13,10 @@ class ImmutableBoard
       size: @size,
       initial_state: new_state
     )
+  end
+
+  def to_a
+    @state
   end
 
   def occupied_coordinates
@@ -35,11 +35,7 @@ class ImmutableBoard
   private
 
   def empty_board
-    [
-      '', '', '',
-      '', '', '',
-      '', '', ''
-    ]
+    (0...@size * @size).map { |_| nil }
   end
 
   def occupied_linear_positions
