@@ -47,11 +47,11 @@ describe Game do
     end
   end
 
-  let(:game) {Game.new}
-  let(:presenter) {PresenterSpy.new}
+  let(:game) { Game.new }
+  let(:presenter) { PresenterSpy.new }
 
   context 'given the game has started' do
-    before {game.start(presenter)}
+    before { game.start(presenter) }
 
     context 'given nobody has made any moves' do
       it 'presents an empty board' do
@@ -64,16 +64,16 @@ describe Game do
       end
 
       it '#place has nil return value' do
-        expect(game.place(1,1)).to be_nil
+        expect(game.place(1, 1)).to be_nil
       end
     end
 
     context 'when the player has placed a piece' do
-      before {game.place(x, y)}
+      before { game.place(x, y) }
 
       context 'in position 1,1' do
-        let(:x) {1}
-        let(:y) {1}
+        let(:x) { 1 }
+        let(:y) { 1 }
         it 'presents the players piece' do
           expected_board = [
             'X', '', '',
@@ -85,8 +85,8 @@ describe Game do
       end
 
       context 'in position 1,2' do
-        let(:x) {1}
-        let(:y) {2}
+        let(:x) { 1 }
+        let(:y) { 2 }
         it 'presents the players piece' do
           expected_board = [
             '', '', '',
@@ -99,8 +99,8 @@ describe Game do
 
 
       context 'in position 3,2' do
-        let(:x) {3}
-        let(:y) {2}
+        let(:x) { 3 }
+        let(:y) { 2 }
         it 'presents the players piece' do
           expected_board = [
             '', '', '',
@@ -112,8 +112,8 @@ describe Game do
       end
 
       context 'in position 2,2' do
-        let(:x) {2}
-        let(:y) {2}
+        let(:x) { 2 }
+        let(:y) { 2 }
         it 'presents the players piece' do
           expected_board = [
             '', '', '',
@@ -125,8 +125,8 @@ describe Game do
       end
 
       context 'in position 1,3' do
-        let(:x) {1}
-        let(:y) {3}
+        let(:x) { 1 }
+        let(:y) { 3 }
         it 'presents the players piece' do
           expected_board = [
             '', '', '',
