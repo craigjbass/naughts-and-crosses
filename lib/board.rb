@@ -4,6 +4,11 @@ class Board
     @size = size
   end
 
+  def place(piece, x, y)
+    position = linear_position_for(x, y)
+    self[position] = piece
+  end
+
   def empty_board
     [
       '', '', '',
@@ -26,13 +31,13 @@ class Board
       .select { |i| @array[i] == 'X' }
   end
 
-  def occupied_xy_coordinates
+  def occupied_coordinates
     occupied_linear_positions.map do |linear_position|
       xy_coordinate_for(linear_position)
     end
   end
 
-  def grid_coordinates
+  def coordinates
     (1...@size + 1)
       .to_a
       .repeated_permutation(2)

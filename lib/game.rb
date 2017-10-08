@@ -9,16 +9,16 @@ class Game
   end
 
   def place(x, y)
-    position = @board.linear_position_for(x, y)
-    @board[position] = 'X'
+    @board.place('X', x, y)
 
     present
   end
 
   def available_coordinates
-    occupied_coordinates = @board.occupied_xy_coordinates
-
-    @board.grid_coordinates.reject { |c| occupied_coordinates.include?(c) }
+    occupied_coordinates = @board.occupied_coordinates
+    @board.coordinates.reject do |coordinate|
+      occupied_coordinates.include?(coordinate)
+    end
   end
 
   private
