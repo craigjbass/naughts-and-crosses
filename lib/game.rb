@@ -5,6 +5,7 @@ require 'use_case/start_game'
 require 'use_case/play_move'
 require 'use_case/view_available_moves'
 require 'use_case/check_move_is_valid'
+require 'use_case/view_board'
 
 class Game
   BOARD_SIZE = 3
@@ -16,11 +17,11 @@ class Game
     @place_new_piece = PlayMove.new(@board_repository)
     @view_available_moves = ViewAvailableMoves.new(@board_repository)
     @check_move_is_valid = CheckMoveIsValid.new(@board_repository)
+    @view_board = ViewBoard.new(@board_repository)
   end
 
   def start(presenter)
-    @presenter = presenter
-    @board_repository.subscribe { present }
+    subscribe_presenter_to_updates(presenter)
     @start_game.execute(size: BOARD_SIZE)
   end
 
@@ -38,10 +39,9 @@ class Game
 
   private
 
-  def present
-    board = @board_repository.fetch.to_a
-    @presenter.present(
-      board.map { |cell| cell.nil? ? '' : cell }
-    )
+  def subscribe_presenter_to_updates(presenter)
+    @board_repository.subscribe do
+      @view_board.execute(presenter)
+    end
   end
 end
