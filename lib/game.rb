@@ -1,13 +1,18 @@
 require 'immutable_board'
 require 'board_creator'
 require 'board_coordinates'
+require 'board_repository'
 
 class Game
   BOARD_SIZE = 3
 
+  def initialize
+    @board_repository = BoardRepository.new
+  end
+
   def start(presenter)
     @presenter = presenter
-    @board = ImmutableBoard.new(size: BOARD_SIZE)
+    @board_repository.update(ImmutableBoard.new(size: BOARD_SIZE))
     @board_coordinates = BoardCoordinates.new(size: BOARD_SIZE)
     @board_creator = BoardCreator.new(size: BOARD_SIZE)
 
@@ -19,7 +24,9 @@ class Game
   end
 
   def place(x, y)
-    @board = @board_creator.with_piece_at(@board, x, y, 'X')
+    @board_repository.update(
+      @board_creator.with_piece_at(@board_repository.fetch, x, y, 'X')
+    )
 
     present
   end
@@ -31,7 +38,7 @@ class Game
   private
 
   def present
-    board = @board.to_a
+    board = @board_repository.fetch.to_a
     @presenter.present(
       board.map { |cell| cell.nil? ? '' : cell }
     )
@@ -39,7 +46,7 @@ class Game
   end
 
   def occupied_coordinates
-    @board_coordinates.occupied_coordinates(@board)
+    @board_coordinates.occupied_coordinates(@board_repository.fetch)
   end
 
   def all_possible_coordinates
