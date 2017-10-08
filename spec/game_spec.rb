@@ -1,16 +1,15 @@
 class Game
   def start(presenter)
     @presenter = presenter
+    @board = empty_board
     @presenter.present(empty_board)
   end
 
   def place(x, y)
-    board = empty_board
-
     position = coordinates_to_position(x, y)
-    board[position] = 'X'
+    @board[position] = 'X'
 
-    @presenter.present(board)
+    @presenter.present(@board)
   end
 
   private
