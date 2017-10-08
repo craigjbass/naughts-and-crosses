@@ -1,41 +1,9 @@
 class ImmutableBoard
+  attr_reader :size
+
   def initialize(size:, initial_state: nil)
     @size = size
     @state = (initial_state || empty_board).freeze
-  end
-
-  def place(piece, x, y)
-    position = linear_position_for(x, y)
-
-    new_state = @state.dup
-    new_state[position] = piece
-    ImmutableBoard.new(
-      size: @size,
-      initial_state: new_state
-    )
-  end
-
-  def to_a
-    @state
-  end
-
-  def occupied_coordinates
-    occupied_linear_positions.map do |linear_position|
-      xy_coordinate_for(linear_position)
-    end
-  end
-
-  def coordinates
-    (1...@size + 1)
-      .to_a
-      .repeated_permutation(2)
-      .to_a
-  end
-
-  private
-
-  def empty_board
-    (0...@size * @size).map { |_| nil }
   end
 
   def occupied_linear_positions
@@ -44,13 +12,13 @@ class ImmutableBoard
       .select { |i| @state[i] == 'X' }
   end
 
-  def xy_coordinate_for(linear_position)
-    [linear_position % @size + 1, linear_position / @size + 1]
+  def to_a
+    @state
   end
 
-  def linear_position_for(x, y)
-    zero_indexed_y = y - 1
-    zero_indexed_x = x - 1
-    (zero_indexed_y * @size) + zero_indexed_x
+  private
+
+  def empty_board
+    (0...@size * @size).map { |_| nil }
   end
 end
