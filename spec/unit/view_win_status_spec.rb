@@ -81,6 +81,31 @@ describe ViewWinStatus do
           nil, nil, nil,
           nil, nil, nil,
           :!, :!, :!
+        ],
+        [
+          :!, nil, nil,
+          :!, nil, nil,
+          :!, nil, nil
+        ],
+        [
+          nil, :!, nil,
+          nil, :!, nil,
+          nil, :!, nil
+        ],
+        [
+          nil, nil, :!,
+          nil, nil, :!,
+          nil, nil, :!
+        ],
+        [
+          :!, nil, nil,
+          nil, :!, nil,
+          nil, nil, :!
+        ],
+        [
+          nil, nil, :!,
+          nil, :!, nil,
+          :!, nil, nil
         ]
       ]
     end
