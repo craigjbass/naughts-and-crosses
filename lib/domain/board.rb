@@ -36,6 +36,6 @@ class Board
   def occupied_linear_positions
     @state
       .each_index
-      .select { |i| @state[i] == 'X' }
+      .reject { |i| @state[i].nil? }
   end
 end
