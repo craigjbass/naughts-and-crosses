@@ -1,7 +1,9 @@
 require 'use_case/view_win_status'
 
 describe ViewWinStatus do
-  let(:board_repository) { double(fetch: Board.new(size: 3, initial_state: board)) }
+  let(:board_repository) do
+    double(fetch: Board.new(size: 3, initial_state: board))
+  end
   subject do
     ViewWinStatus.new(
       board_repository: board_repository
