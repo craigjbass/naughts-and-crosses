@@ -36,6 +36,20 @@ describe ViewWinStatus do
     end
   end
 
+  context 'given X and Os fill horizontal' do
+    let(:board) do
+      [
+        'X', 'O', 'X',
+        nil, nil, nil,
+        nil, nil, nil
+      ]
+    end
+
+    it 'is a game in progress' do
+      is_expected.to eq(status: :in_progress)
+    end
+  end
+
   context 'given X in top two left' do
     let(:board) do
       [
@@ -50,45 +64,42 @@ describe ViewWinStatus do
     end
   end
 
-  context 'given top horizontal X win' do
-    let(:board) do
+  context 'given a winning board' do
+    let(:winning_boards) do
       [
-        'X', 'X', 'X',
-        nil, nil, nil,
-        nil, nil, nil
+        [
+          :!, :!, :!,
+          nil, nil, nil,
+          nil, nil, nil
+        ],
+        [
+          nil, nil, nil,
+          :!, :!, :!,
+          nil, nil, nil
+        ],
+        [
+          nil, nil, nil,
+          nil, nil, nil,
+          :!, :!, :!
+        ]
       ]
     end
 
-    it 'is win for x' do
-      is_expected.to eq(status: :x_wins)
-    end
-  end
-
-  context 'given middle horizontal X win' do
-    let(:board) do
-      [
-        nil, nil, nil,
-        'X', 'X', 'X',
-        nil, nil, nil
-      ]
+    def test_winning_boards(piece, expectation)
+      winning_boards.each do |board|
+        board = Board.new(size: 3, initial_state: board.map { |cell| cell.nil? ? nil : piece })
+        board_repository = double(fetch: board)
+        win_status = ViewWinStatus.new(board_repository: board_repository).execute
+        expect(win_status).to eq(expectation)
+      end
     end
 
-    it 'is win for x' do
-      is_expected.to eq(status: :x_wins)
-    end
-  end
-
-  context 'given bottom horizontal X win' do
-    let(:board) do
-      [
-        nil, nil, nil,
-        nil, nil, nil,
-        'X', 'X', 'X'
-      ]
+    it 'detects wins for X' do
+      test_winning_boards('X', status: :x_wins)
     end
 
-    it 'is win for x' do
-      is_expected.to eq(status: :x_wins)
+    it 'detects wins for O' do
+      test_winning_boards('O', status: :o_wins)
     end
   end
 end
