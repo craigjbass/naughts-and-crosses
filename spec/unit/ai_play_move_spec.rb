@@ -14,6 +14,7 @@ describe AiPlayMove do
   let(:use_case) do
     board_repository = double(fetch: board)
     view_available_moves = ViewAvailableMoves.new(board_repository)
+
     AiPlayMove.new(
       board_repository: board_repository,
       play_move: play_move_spy,
@@ -23,6 +24,7 @@ describe AiPlayMove do
 
   context 'given board is size 3' do
     let(:size) { 3 }
+
     context 'and AI plays as O' do
       before { use_case.execute(type: 'O') }
 
@@ -63,9 +65,27 @@ describe AiPlayMove do
 
     context 'when the ai plays a move as X' do
       before { use_case.execute(type: 'X') }
+
       it 'places a piece in the middle' do
         expect(play_move_spy.last_move).to eq(x: 2, y: 2, type: 'X')
       end
+    end
+  end
+
+  context 'given a board with multiple remaining spaces' do
+    let(:size) { 3 }
+    let(:board) do
+      Board.new(
+        size: size,
+        initial_state: [
+          'X', 'X', nil,
+          'O', 'X', 'O',
+          nil, 'O', 'O'
+        ]
+      )
+    end
+
+    context 'when the ai plays a move as X' do
     end
   end
 end

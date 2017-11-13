@@ -16,11 +16,13 @@ describe Minimax do
 
   context 'given no possibilities' do
     let(:possibilities) { [] }
+
     it('gives nil') { expect(optimum_move).to eq(nil) }
   end
 
   context 'given one leaf possibility' do
     let(:possibilities) { [MinimaxableStub.new(option: { option: 1 }, score: 0)] }
+
     it 'gives leaf possibility' do
       expect(optimum_move).to eq(option: 1)
     end
@@ -34,6 +36,7 @@ describe Minimax do
           MinimaxableStub.new(option: [2, 2, 'X'], score: 10)
         ]
       end
+
       it 'chooses possibility with highest score' do
         expect(optimum_move).to eq([2, 2, 'X'])
       end
@@ -46,6 +49,7 @@ describe Minimax do
           MinimaxableStub.new(option: [2, 2, 'X'], score: 0)
         ]
       end
+
       it 'chooses possibility with highest score' do
         expect(optimum_move).to eq([1, 2, 'X'])
       end
@@ -67,6 +71,7 @@ describe Minimax do
         )
       ]
     end
+
     it 'chooses leaf root possibility' do
       expect(optimum_move).to eq([1, 2, 'X'])
     end
@@ -91,6 +96,7 @@ describe Minimax do
         )
       ]
     end
+
     it 'chooses highest leaf root possibility' do
       expect(optimum_move).to eq([3, 2, 'X'])
     end
@@ -115,6 +121,7 @@ describe Minimax do
         )
       ]
     end
+
     it 'chooses highest scored root possibility' do
       expect(optimum_move).to eq([3, 2, 'X'])
     end
@@ -231,6 +238,7 @@ describe Minimax do
         )
       ]
     end
+
     it 'chooses highest scored root possibility' do
       expect(optimum_move).to eq([3, 2, 'X'])
     end
