@@ -1,3 +1,5 @@
+require 'minimax'
+
 class AiPlayMove
   def initialize(board_repository:, play_move:, view_available_moves:)
     @play_move = play_move
@@ -7,15 +9,23 @@ class AiPlayMove
 
   def execute(type:)
     available_moves = @view_available_moves.execute
-    minimaxable_moves = available_moves.map { 
-      |x,y| Minimaxable.new(
-        board: @board_repository.fetch, x: x, y: y, type: type, ai: 'X'
+    board = @board_repository.fetch
+    if (available_moves.length % board.size) == 0
+      @play_move.execute(x: 1, y: 1, type: type)
+
+      return {}
+    end
+    minimaxable_moves = available_moves.map do |x, y|
+      Minimaxable.new(
+        board: board, x: x, y: y, type: type, ai: type
       )
-    }
+    end
 
     selected_move = Minimax.new.find_optimum_next_move(minimaxable_moves)
 
     @play_move.execute(x: selected_move[:x], y: selected_move[:y], type: type)
+
+    {}
   end
 end
 

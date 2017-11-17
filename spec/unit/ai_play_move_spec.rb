@@ -59,7 +59,7 @@ describe AiPlayMove do
     context 'when the ai plays a move as O' do
       before { use_case.execute(type: 'O') }
       it 'places a piece in the middle' do
-        expect(play_move_spy.last_move).to eq(x: 2, y: 2, type: 'O')
+        expect(play_move_spy.last_move).to eq(x: 1, y: 1, type: 'O')
       end
     end
 
@@ -67,7 +67,7 @@ describe AiPlayMove do
       before { use_case.execute(type: 'X') }
 
       it 'places a piece in the middle' do
-        expect(play_move_spy.last_move).to eq(x: 2, y: 2, type: 'X')
+        expect(play_move_spy.last_move).to eq(x: 1, y: 1, type: 'X')
       end
     end
   end
@@ -86,6 +86,43 @@ describe AiPlayMove do
     end
 
     context 'when the ai plays a move as X' do
+      before { use_case.execute(type: 'X') }
+
+      it 'places a piece in the top right corner' do
+        expect(play_move_spy.last_move).to eq(x: 3, y: 1, type: 'X')
+      end
+    end
+
+    context 'when the ai plays a move as O' do
+      before { use_case.execute(type: 'O') }
+
+      it 'places a piece in the top right corner' do
+        expect(play_move_spy.last_move).to eq(x: 3, y: 1, type: 'O')
+      end
+    end
+  end
+
+  context 'given a board with multiple remaining spaces' do
+    let(:size) { 3 }
+    let(:board) do
+      Board.new(
+        size: size,
+        initial_state: [
+          'X', nil, nil,
+          nil, nil, nil,
+          nil, nil, nil
+        ]
+      )
+    end
+
+    context 'when the ai plays a move as O' do
+      before do
+        use_case.execute(type: 'O')
+      end
+
+      it 'places a piece in the top right corner', focus: true do
+        expect(play_move_spy.last_move).to eq(x: 1, y: 3, type: 'O')
+      end
     end
   end
 end

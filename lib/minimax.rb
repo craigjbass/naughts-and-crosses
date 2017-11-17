@@ -1,9 +1,10 @@
+require 'parallel'
+
 class Minimax
   def find_optimum_next_move(moves)
     return nil if moves.empty?
 
-    moves
-      .map { |mm| score_move(mm) }
+    Parallel.map(moves) { |move| score_move(move) }
       .sort_by { |a| a[:score] }
       .last[:option]
   end
